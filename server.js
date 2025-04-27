@@ -24,7 +24,7 @@ app.get('/webhook', (req, res) => {
         // Check the mode and token
         if (mode === 'subscribe' && token === VERIFY_TOKEN) {
             // Respond with the challenge token from the request
-            console.log('WEBHOOK_VERIFIED');
+            console.log('[Webhook Verified Successfully]');
             res.status(200).send(challenge);
         } else {
             // Respond with '403 Forbidden' if verify tokens do not match
@@ -46,8 +46,10 @@ app.post('/webhook', (req, res) => {
     res.sendStatus(200);
 });
 
-// Start the server
-app.listen(PORT, () => {
+// Start the server - Listen on all interfaces (0.0.0.0) for Railway deployment
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`WhatsApp webhook server running on port ${PORT}`);
-    console.log(`Webhook available at: http://localhost:${PORT}/webhook`);
+    console.log(`Server is listening on all interfaces (0.0.0.0:${PORT})`);
+    console.log(`For local testing: http://localhost:${PORT}/webhook`);
+    console.log(`For production: Use your Railway public URL/webhook`);
 });
